@@ -40,25 +40,25 @@
 	height: 92vmin;
 	border: 5px solid black;
 	display: grid;
-	grid-template-rows: repeat(18, 1fr);
+	grid-template-rows: repeat(26, 1fr);
 	/* grid-template-rows means that the grid will be divided into 18 rows each of height 1fr. */
-	grid-template-columns: repeat(18, 1fr);
+	grid-template-columns: repeat(26, 1fr);
 }
 
 .food {
 	background: linear-gradient(red, purple);
 	border: 0.25vmin solid black;
-	border-radius: 8px;
+	/* border-radius: 8px; */
 }
 .head {
 	background: linear-gradient(rgb(255, 172, 172), rgb(247, 247, 185));
 	border: 2px solid purple;
 	transform: scale(1.02);
-	border-radius: 9px;
+	/* border-radius: 9px; */
 }
 
 .snake {
 	background-color: purple;
 	border: 0.25vmin solid black;
-	border-radius: 12px;
+	/* border-radius: 12px; */
 }

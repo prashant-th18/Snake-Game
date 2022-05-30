@@ -1,15 +1,16 @@
 // Constants
 let direction = { x: 0, y: 0 };
-let speed = 5,
-	score = 0;
+let speed = 8,
+	score = 0,
+	maxSpeed = 16;
 let lastPaintTime = 0;
 let snakeArray = [{ x: 13, y: 15 }]; // Contains the initial position of the snake
 let food = { x: 4, y: 2 };
 const board = document.querySelector("#board");
 const showScore = document.querySelector("#score");
 const showHighScore = document.querySelector("#highScore");
-const maxHeight = 18;
-const maxWidth = 18;
+const maxHeight = 26;
+const maxWidth = 26;
 
 // Game Functions
 const main = (ctime) => {
@@ -30,10 +31,10 @@ const isCollide = (sArr) => {
 		}
 	}
 	if (
-		sArr[0].x > maxWidth ||
-		sArr[0].x <= 0 ||
-		sArr[0].y > maxHeight ||
-		sArr[0].y <= 0
+		sArr[0].x + direction.x > maxWidth ||
+		sArr[0].x + direction.x <= 0 ||
+		sArr[0].y + direction.y > maxHeight ||
+		sArr[0].y + direction.y <= 0
 	) {
 		return true;
 	}
@@ -46,10 +47,10 @@ const gameEngine = () => {
 	// Collision
 	if (isCollide(snakeArray)) {
 		direction = { x: 0, y: 0 };
-		alert("Game Over! Press any key to play again!");
+		alert("Game Over! Press OK to play again!");
 		snakeArray = [{ x: 13, y: 15 }];
 		score = 0;
-		showScore.innerHTML = "Score:0";
+		showScore.innerHTML = "Score: 0";
 	}
 
 	// If snake has eaten the food
@@ -67,7 +68,10 @@ const gameEngine = () => {
 			localStorage.setItem("highScore", JSON.stringify(highScoreVal));
 			showHighScore.innerHTML = "High Score: " + highScoreVal;
 		}
-		showScore.innerHTML = "Score:" + score;
+		showScore.innerHTML = "Score: " + score;
+		// As score increases, speed increases
+		speed += 0.25;
+		speed = Math.min(speed, maxSpeed);
 	}
 
 	// Moving the snake
@@ -113,7 +117,7 @@ if (highScore === null) {
 	localStorage.setItem("highScore", JSON.stringify(highScoreVal));
 } else {
 	highScoreVal = JSON.parse(highScore);
-	showHighScore.innerHTML = "High Score:" + highScoreVal;
+	showHighScore.innerHTML = "High Score: " + highScoreVal;
 }
 
 requestAnimationFrame(main);
@@ -121,22 +125,26 @@ requestAnimationFrame(main);
 window.addEventListener("keydown", (e) => {
 	switch (e.key) {
 		case "ArrowUp":
-			console.log("ArrowUp");
+			if (direction.y == 1) break;
+			// console.log("ArrowUp");
 			direction.x = 0;
 			direction.y = -1;
 			break;
 		case "ArrowDown":
-			console.log("ArrowDown");
+			if (direction.y == -1) break;
+			// console.log("ArrowDown");
 			direction.x = 0;
 			direction.y = 1;
 			break;
 		case "ArrowLeft":
-			console.log("ArrowLeft");
+			if (direction.x == 1) break;
+			// console.log("ArrowLeft");
 			direction.x = -1;
 			direction.y = 0;
 			break;
 		case "ArrowRight":
-			console.log("ArrowRight");
+			if (direction.x == -1) break;
+			// console.log("ArrowRight");
 			direction.x = 1;
 			direction.y = 0;
 			break;
